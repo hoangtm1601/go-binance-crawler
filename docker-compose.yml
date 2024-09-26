@@ -1,0 +1,20 @@
+version: '3.5'
+services:
+  redis:
+    container_name: go-binance-redis
+    image: redis:7.0.9
+    ports:
+      - 6379:6379
+    command: redis-server --requirepass ${REDIS_PASSWORD:-redis_pw}
+
+  postgres:
+    container_name: go-binance-postgres
+    image: postgres:15.2
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-go_binance@pw}
+      - POSTGRES_USER=${POSTGRES_USER:-go_binance}
+      - POSTGRES_DB=${POSTGRES_DB:-go_binance}
+    volumes:
+      - /data/go-binance-be-demo/postgres:/var/lib/postgresql/data
